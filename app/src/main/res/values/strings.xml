@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY author "abhishekwl">
+    <!ENTITY base_url "http://192.168.2.11:8000/api/v1/">
+    ]>
+
+<resources>
+    <string name="app_name">Hunt (Admin)</string>
+    <string name="app_name_actual">Hunt</string>
+    <string name="sign_in">Sign In.</string>
+    <string name="enter_your_credentials_to_continue">Enter your credentials to continue</string>
+    <string name="email_address">EMAIL ADDRESS</string>
+    <string name="password">PASSWORD</string>
+    <string name="new_here_sign_up">New here? Sign Up</string>
+    <string name="base_server_url">&base_url;</string>
+</resources>

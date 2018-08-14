@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@color/colorAccent"
+    tools:context=".Activities.SignInActivity">
+
+    <LinearLayout
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/signInLogoImageView"
+            android:layout_marginTop="16dp"
+            tools:src="@drawable/price_tag_white"
+            android:layout_width="164dp"
+            android:layout_height="164dp" />
+
+        <TextView
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="48sp"
+            android:text="@string/sign_in"
+            android:layout_marginTop="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"
+            android:layout_marginStart="6dp"
+            android:text="@string/enter_your_credentials_to_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/signInEmailAddressEditText"
+            android:layout_marginTop="40dp"
+            android:inputType="textEmailAddress"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/white"
+            android:hint="@string/email_address"
+            android:backgroundTint="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/signInPasswordEditText"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/white"
+            android:hint="@string/password"
+            android:backgroundTint="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/signInSignUpTextView"
+            android:text="@string/new_here_sign_up"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/signInFAB"
+            android:src="@drawable/ic_navigate_next_white_24dp"
+            android:tint="@color/colorAccent"
+            app:elevation="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:rippleColor="@color/colorAccent"
+            app:backgroundTint="@android:color/white"
+            android:alpha="0.75"
+            android:layout_marginTop="64dp"
+            app:fabSize="normal"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>
