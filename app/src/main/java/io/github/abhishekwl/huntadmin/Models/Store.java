@@ -18,6 +18,7 @@ public class Store implements Parcelable {
     @SerializedName("delivery_service") private boolean deliveryService;
     @SerializedName("delivery_distance_threshold") private double deliveryDistanceThreshold;
     @SerializedName("extra_distance_unit_cost") private double extraDistanceUnitCost;
+    @SerializedName("free_delivery_cost_threshold") private double freeDeliveryCostThreshold;
     @SerializedName("account_number") private String accountNumber;
     @SerializedName("account_holder_name") private String accountHolderName;
     @SerializedName("ifsc") private String accountIfsc;
@@ -230,4 +231,12 @@ public class Store implements Parcelable {
             return new Store[size];
         }
     };
+
+    public double getFreeDeliveryCostThreshold() {
+        return freeDeliveryCostThreshold;
+    }
+
+    public void setFreeDeliveryCostThreshold(double freeDeliveryCostThreshold) {
+        this.freeDeliveryCostThreshold = freeDeliveryCostThreshold;
+    }
 }

@@ -1,11 +1,11 @@
 package io.github.abhishekwl.huntadmin.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -46,22 +46,24 @@ public class SplashActivity extends AppCompatActivity {
         apiInterface = ApiClient.getClient(getApplicationContext()).create(ApiInterface.class);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser()==null) {
-            new Handler().postDelayed(() -> {
-                navigateToNextActivity(null);
-            }, SPLASH_DELAY_LENGTH);
+            new Handler().postDelayed(() -> navigateToNextActivity(null), SPLASH_DELAY_LENGTH);
         } else {
             apiInterface.getStore(firebaseAuth.getUid()).enqueue(new Callback<Store>() {
                 @Override
                 public void onResponse(@NonNull Call<Store> call, @NonNull Response<Store> response) {
-                    navigateToNextActivity(response.body());
+                    sleepAndNavigateAhead(response.body());
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Store> call, @NonNull Throwable t) {
-                    navigateToNextActivity(null);
+                    sleepAndNavigateAhead(null);
                 }
             });
         }
+    }
+
+    private void sleepAndNavigateAhead(Store store) {
+        new Handler().postDelayed(() -> navigateToNextActivity(store), SPLASH_DELAY_LENGTH);
     }
 
     private void navigateToNextActivity(Store store) {

@@ -20,7 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '28.0.1'
+    buildToolsVersion '28.0.2'
 }
 
 dependencies {
@@ -42,16 +42,20 @@ dependencies {
     //Material Dialog
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     //Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //Location
     implementation 'com.google.android.gms:play-services-location:15.0.1'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    //Circular ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //Slider
+    implementation 'com.ramotion.fluidslider:fluid-slider:0.3.0'
 }
 apply plugin: 'com.google.gms.google-services'

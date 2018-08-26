@@ -1,14 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragments.ProfileFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <TextView
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="@color/colorTextDark"
+            android:text="@string/store_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.CardView
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/white"
+            app:contentPadding="16dp"
+            android:layout_marginBottom="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileFragmentImageView"
+                    app:civ_border_color="@color/colorAccent"
+                    app:civ_border_width="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/price_tag_black"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/profileFragmentStoreNameEditText"
+                        android:hint="Store name"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:inputType="textCapWords"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/profileFragmentStoreContactNumberEditText"
+                        android:hint="Store contact number"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:inputType="phone"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Spinner
+                    android:id="@+id/profileFragmentStoreDepartmentSpinner"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="@color/colorTextDark"
+            android:text="@string/delivery_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.CardView
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/white"
+            app:contentPadding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:text="@string/delivery_service_offered"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <RadioGroup
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <RadioButton
+                            android:id="@+id/profileFragmentDeliveryYesRadioButton"
+                            android:layout_weight="1"
+                            android:text="Yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/profileFragmentDeliveryNoRadioButton"
+                            android:checked="true"
+                            android:layout_weight="1"
+                            android:text="No"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="32dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:text="@string/delivery_distance_threshold"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.ramotion.fluidslider.FluidSlider
+                        android:id="@+id/profileFragmentDeliveryDistanceThresholdSlider"
+                        app:bar_color="@color/colorAccent"
+                        app:start_text="1 KM"
+                        app:end_text="100 KM"
+                        app:text_size="18sp"
+                        app:size="small"
+                        app:initial_position="0.15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="32dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:text="@string/extra_distance_unit_cost"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.ramotion.fluidslider.FluidSlider
+                        android:id="@+id/profileFragmentExtraDistanceUnitCostSlider"
+                        app:bar_color="@color/colorAccentSecondary"
+                        app:start_text="\u20b9 1"
+                        app:end_text="\u20b9 50"
+                        app:text_size="18sp"
+                        app:size="small"
+                        app:initial_position="0.15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="32dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:text="@string/free_delivery_cost_threshold"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.ramotion.fluidslider.FluidSlider
+                        android:id="@+id/profileFragmentFreeDeliveryCostThresholdSlider"
+                        app:bar_color="@color/colorPrimaryDark"
+                        app:start_text="\u20b9 1"
+                        app:end_text="\u20b9 1000"
+                        app:text_size="16sp"
+                        app:size="small"
+                        app:initial_position="0.15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/profileFragmentUpdateSettingsButton"
+            android:text="Update Settings"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/colorAccent"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</ScrollView>

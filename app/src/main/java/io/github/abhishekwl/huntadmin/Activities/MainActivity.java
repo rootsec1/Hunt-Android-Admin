@@ -104,6 +104,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public Store getCurrentStore() {
+        return currentStore;
+    }
+
+    public void setCurrentStore(Store currentStore) {
+        this.currentStore = currentStore;
+    }
+
     @Override
     protected void onDestroy() {
         unbinder.unbind();
