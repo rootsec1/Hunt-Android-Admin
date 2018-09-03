@@ -9,10 +9,10 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/mainTabLayout"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorBackground"
         app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="@color/colorTabUnselected"
-        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@color/colorTextDark"
+        app:tabSelectedTextColor="@android:color/black"
         app:tabIndicatorColor="@color/colorAccent"
         android:elevation="8dp"
         android:layout_width="match_parent"

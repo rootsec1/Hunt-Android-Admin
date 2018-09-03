@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE resources [
-    <!ENTITY author "abhishekwl">
-    <!ENTITY base_url "http://192.168.2.7:8000/api/v1/">
-    ]>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY author "abhishekwl"><!ENTITY base_url "http://192.168.2.6:8000/api/v1/">]>
 
 <resources>
     <string name="app_name">Hunt (Admin)</string>

@@ -52,8 +52,8 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentSecondary));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentSecondary));
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
 

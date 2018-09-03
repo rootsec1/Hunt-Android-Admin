@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:background="@color/colorAccent"
+    android:background="@color/colorAccentSecondary"
     tools:context=".Activities.SignInActivity">
 
     <LinearLayout
@@ -81,7 +81,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/signInFAB"
             android:src="@drawable/ic_navigate_next_white_24dp"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorAccentSecondary"
             app:elevation="16dp"
             android:clickable="true"
             android:focusable="true"

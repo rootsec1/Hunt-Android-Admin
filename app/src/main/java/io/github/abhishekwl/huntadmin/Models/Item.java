@@ -18,8 +18,9 @@ public class Item implements Parcelable {
     @SerializedName("image") private String image;
     @SerializedName("order_count") private int orderCount;
     @SerializedName("store") private Store store;
+    @SerializedName("colors") private String colors[];
 
-    public Item(String productId, String name, String subcategory, String category, double price, double discount, double priority, double rating, String image, int orderCount, Store store) {
+    public Item(String productId, String name, String subcategory, String category, double price, double discount, double priority, double rating, String image, int orderCount, Store store, String colors[]) {
         this.productId = productId;
         this.name = name;
         this.subcategory = subcategory;
@@ -31,18 +32,20 @@ public class Item implements Parcelable {
         this.image = image;
         this.orderCount = orderCount;
         this.store = store;
+        this.colors = colors;
     }
 
-    public Item(String productId, String name, String subcategory, String category, double price, Store store) {
+    public Item(String productId, String name, String subcategory, String category, double price, Store store, String colors[]) {
         this.productId = productId;
         this.name = name;
         this.subcategory = subcategory;
         this.category = category;
         this.price = price;
         this.store = store;
+        this.colors = colors;
     }
 
-    public Item(String productId, String name, String subcategory, String category, double price, String image, Store store) {
+    public Item(String productId, String name, String subcategory, String category, double price, String image, Store store, String colors[]) {
         this.productId = productId;
         this.name = name;
         this.subcategory = subcategory;
@@ -50,6 +53,7 @@ public class Item implements Parcelable {
         this.price = price;
         this.image = image;
         this.store = store;
+        this.colors = colors;
     }
 
     public String getProductId() {
@@ -140,6 +144,14 @@ public class Item implements Parcelable {
         this.store = store;
     }
 
+    public String[] getColors() {
+        return colors;
+    }
+
+    public void setColors(String[] colors) {
+        this.colors = colors;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -158,6 +170,7 @@ public class Item implements Parcelable {
         dest.writeString(this.image);
         dest.writeInt(this.orderCount);
         dest.writeParcelable(this.store, flags);
+        dest.writeStringArray(this.colors);
     }
 
     private Item(Parcel in) {
@@ -172,6 +185,7 @@ public class Item implements Parcelable {
         this.image = in.readString();
         this.orderCount = in.readInt();
         this.store = in.readParcelable(Store.class.getClassLoader());
+        this.colors = in.createStringArray();
     }
 
     public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {

@@ -62,15 +62,13 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager.setAdapter(mainViewPagerAdapter);
         mainTabLayout.setupWithViewPager(mainViewPager);
         Objects.requireNonNull(mainTabLayout.getTabAt(0)).setIcon(R.drawable.ic_shopping_cart_white_24dp);
-        Objects.requireNonNull(mainTabLayout.getTabAt(1)).setIcon(R.drawable.ic_inbox_white_24dp);
-        Objects.requireNonNull(mainTabLayout.getTabAt(2)).setIcon(R.drawable.ic_history_white_24dp);
-        Objects.requireNonNull(mainTabLayout.getTabAt(3)).setIcon(R.drawable.ic_trending_up_white_24dp);
-        Objects.requireNonNull(mainTabLayout.getTabAt(4)).setIcon(R.drawable.ic_person_white_24dp);
+        Objects.requireNonNull(mainTabLayout.getTabAt(1)).setIcon(R.drawable.ic_history_white_24dp);
+        Objects.requireNonNull(mainTabLayout.getTabAt(2)).setIcon(R.drawable.ic_trending_up_white_24dp);
+        Objects.requireNonNull(mainTabLayout.getTabAt(3)).setIcon(R.drawable.ic_person_white_24dp);
         Objects.requireNonNull(Objects.requireNonNull(mainTabLayout.getTabAt(0)).getIcon()).setColorFilter(colorWhite, PorterDuff.Mode.SRC_IN);
         Objects.requireNonNull(Objects.requireNonNull(mainTabLayout.getTabAt(1)).getIcon()).setColorFilter(colorBackground, PorterDuff.Mode.SRC_IN);
         Objects.requireNonNull(Objects.requireNonNull(mainTabLayout.getTabAt(2)).getIcon()).setColorFilter(colorBackground, PorterDuff.Mode.SRC_IN);
         Objects.requireNonNull(Objects.requireNonNull(mainTabLayout.getTabAt(3)).getIcon()).setColorFilter(colorBackground, PorterDuff.Mode.SRC_IN);
-        Objects.requireNonNull(Objects.requireNonNull(mainTabLayout.getTabAt(4)).getIcon()).setColorFilter(colorBackground, PorterDuff.Mode.SRC_IN);
         mainTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -100,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 firebaseAuth.signOut();
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 finish();
+            case R.id.searchMenuItem:
+                Intent catalogIntent = new Intent(MainActivity.this, CatalogActivity.class);
+                catalogIntent.putExtra("STORE", currentStore);
+                startActivity(catalogIntent);
         }
         return super.onOptionsItemSelected(item);
     }
