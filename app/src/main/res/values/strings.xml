@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY author "abhishekwl"><!ENTITY base_url "http://192.168.2.6:8000/api/v1/">]>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY author "abhishekwl"><!ENTITY base_url "http://192.168.2.7:8000/api/v1/">]>
 
 <resources>
     <string name="app_name">Hunt (Admin)</string>
@@ -18,4 +18,20 @@
     <string name="delivery_distance_threshold">How far are you willing to deliver for free?</string>
     <string name="extra_distance_unit_cost">What\'s the rate per kilometre if the customer is out of your free delivery service range?</string>
     <string name="free_delivery_cost_threshold">What should the total of the customer\'s bill be above in order for you to offer delivery service?</string>
+
+    <array name="departments">
+        <item>Electronics</item>
+        <item>Groceries</item>
+        <item>Stationery</item>
+        <item>Eatery</item>
+        <item>Furniture</item>
+        <item>Health Care</item>
+        <item>Sports</item>
+        <item>Kitchen</item>
+        <item>Tools &amp; Hardware</item>
+        <item>Clothing</item>
+        <item>Accessories</item>
+        <item>Books</item>
+        <item>Vehicle</item>
+    </array>
 </resources>

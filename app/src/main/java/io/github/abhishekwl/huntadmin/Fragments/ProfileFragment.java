@@ -8,16 +8,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.bumptech.glide.Glide;
 import com.ramotion.fluidslider.FluidSlider;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.abhishekwl.huntadmin.Activities.MainActivity;
 import io.github.abhishekwl.huntadmin.Helpers.ApiClient;
 import io.github.abhishekwl.huntadmin.Helpers.ApiInterface;
 import io.github.abhishekwl.huntadmin.Models.Store;
@@ -72,7 +77,26 @@ public class ProfileFragment extends Fragment {
 
 
     private void initializeViews() {
+        setupDepartmentsDropDown();
+        store = ((MainActivity) Objects.requireNonNull(getActivity())).getCurrentStore();
+        renderStore(store);
+    }
 
+    private void renderStore(Store store) {
+        Glide.with(rootView.getContext()).load(store.getImage()).into(profileFragmentImageView);
+        profileFragmentStoreNameEditText.setText(store.getName());
+        profileFragmentStoreContactNumberEditText.setText(store.getPhone());
+        profileFragmentDeliveryYesRadioButton.setChecked(store.isDeliveryService());
+        profileFragmentDeliveryNoRadioButton.setChecked(!store.isDeliveryService());
+        profileFragmentFreeDeliveryCostThresholdSlider.setPosition((float) store.getFreeDeliveryCostThreshold());
+        profileFragmentFreeDeliveryCostThresholdSlider.setBubbleText(Double.toString(store.getFreeDeliveryCostThreshold()));
+    }
+
+    private void setupDepartmentsDropDown() {
+        String[] departments = rootView.getContext().getResources().getStringArray(R.array.departments);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_spinner_item, departments);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        profileFragmentStoreDepartmentSpinner.setAdapter(spinnerAdapter);
     }
 
     @Override

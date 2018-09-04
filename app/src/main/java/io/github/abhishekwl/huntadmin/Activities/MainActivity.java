@@ -98,10 +98,12 @@ public class MainActivity extends AppCompatActivity {
                 firebaseAuth.signOut();
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 finish();
+                break;
             case R.id.searchMenuItem:
                 Intent catalogIntent = new Intent(MainActivity.this, CatalogActivity.class);
                 catalogIntent.putExtra("STORE", currentStore);
                 startActivity(catalogIntent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
