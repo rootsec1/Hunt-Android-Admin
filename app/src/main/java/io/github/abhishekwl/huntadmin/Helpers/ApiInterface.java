@@ -1,5 +1,8 @@
 package io.github.abhishekwl.huntadmin.Helpers;
 
+import java.util.ArrayList;
+
+import io.github.abhishekwl.huntadmin.Models.Item;
 import io.github.abhishekwl.huntadmin.Models.Store;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -28,4 +31,7 @@ public interface ApiInterface {
     );
 
 
+    //Items
+    @GET("items")
+    Call<ArrayList<Item>> getItems(@Query("uid") String uid, @Query("all") int all);
 }

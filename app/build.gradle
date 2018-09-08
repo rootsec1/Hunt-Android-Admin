@@ -43,8 +43,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     //Firebase
     implementation 'com.google.firebase:firebase-core:16.0.3'
-    implementation 'com.google.firebase:firebase-database:16.0.1'
-    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-database:16.0.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.2'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

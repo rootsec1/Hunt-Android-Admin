@@ -1,6 +1,7 @@
 package io.github.abhishekwl.huntadmin.Adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,10 +26,12 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     private Context context;
     private ArrayList<Item> itemArrayList;
+    private String currencyCode;
 
-    public ItemRecyclerViewAdapter(Context context, ArrayList<Item> itemArrayList) {
+    ItemRecyclerViewAdapter(Context context, ArrayList<Item> itemArrayList) {
         this.context = context;
         this.itemArrayList = itemArrayList;
+        this.currencyCode = Currency.getInstance(Locale.getDefault()).getCurrencyCode();
     }
 
     @NonNull
@@ -36,7 +43,8 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ItemRecyclerViewAdapter.ItemViewHolder holder, int position) {
-
+        Item item = itemArrayList.get(position);
+        holder.render(holder.itemView.getContext(), item);
     }
 
     @Override
@@ -56,10 +64,31 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         TextView itemFinalPriceTextView;
         @BindView(R.id.itemListItemRootLinearLayout)
         LinearLayout itemLinearLayout;
+        @BindView(R.id.itemListItemSubcategoryTextView)
+        TextView itemSubcategoryTextView;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        void render(Context context, Item item) {
+            Glide.with(context).load(item.getImage()).into(itemImageView);
+            itemNameTextView.setText(item.getName());
+            itemSubcategoryTextView.setText(item.getSubcategory());
+            if (item.getDiscount()==0) {
+                if (itemOriginalPriceTextView.getParent()!=null && itemOriginalPriceTextView!=null) ((ViewGroup) itemOriginalPriceTextView.getParent()).removeView(itemOriginalPriceTextView);
+                itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(item.getPrice())));
+            }
+            else {
+                itemOriginalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(item.getPrice())));
+                itemOriginalPriceTextView.setPaintFlags(itemOriginalPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                double finalPrice = item.getPrice() - (item.getDiscount()/100 * item.getPrice());
+                itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(finalPrice)));
+            }
+            itemLinearLayout.setOnClickListener(v -> {
+                //TODO: On item Press
+            });
         }
     }
 }

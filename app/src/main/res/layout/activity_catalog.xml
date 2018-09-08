@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Activities.CatalogActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/catalogRecyclerView"
+    <GridView
+        android:id="@+id/catalogGridView"
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="128dp"
+        android:stretchMode="columnWidth"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </GridView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/catalogFAB"

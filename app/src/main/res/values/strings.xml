@@ -18,6 +18,9 @@
     <string name="delivery_distance_threshold">How far are you willing to deliver for free?</string>
     <string name="extra_distance_unit_cost">What\'s the rate per kilometre if the customer is out of your free delivery service range?</string>
     <string name="free_delivery_cost_threshold">What should the total of the customer\'s bill be above in order for you to offer delivery service?</string>
+    <string name="analytics">Analytics</string>
+    <string name="order_history">Order History</string>
+    <string name="orders">Orders</string>
 
     <array name="departments">
         <item>Electronics</item>
