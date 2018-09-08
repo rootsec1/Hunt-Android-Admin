@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.InventoryFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/inventoryFragmentRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/inventoryFragmentAddItemFAB"
+        android:src="@drawable/ic_add_white_24dp"
+        app:elevation="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:rippleColor="@color/colorAccentSecondary"
+        app:fabSize="normal"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

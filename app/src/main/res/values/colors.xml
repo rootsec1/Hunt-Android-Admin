@@ -7,4 +7,5 @@
     <color name="colorBackground">#EEEEEE</color>
     <color name="colorTabUnselected">#E0E0E0</color>
     <color name="colorAccent">#4A148C</color>
+    <color name="colorDiscount">#FFDE03</color>
 </resources>

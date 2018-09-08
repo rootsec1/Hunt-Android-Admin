@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,6 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        Glide.with(getApplicationContext()).load(R.drawable.price_tag_black).into(signUpProfilePictureImageView);
         setupDepartmentsDropDown();
     }
 
@@ -127,7 +129,6 @@ public class SignUpActivity extends AppCompatActivity {
     private void createNewStore(String storeName, String contactNumber, String emailAddress, String password, String department, boolean deliveryOffered) {
         materialDialog = new MaterialDialog.Builder(SignUpActivity.this)
                 .title(R.string.app_name)
-                .iconRes(R.drawable.price_tag_black)
                 .content("Creating new account")
                 .progress(true, 0)
                 .show();

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="2dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/itemListItemRootLinearLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/itemListItemImageView"
+        android:layout_gravity="center"
+        android:layout_width="128dp"
+        android:layout_height="128dp" />
+
+    <TextView
+        android:id="@+id/itemListItemNameTextView"
+        tools:text="Item Name"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/itemListItemOriginalPriceTextView"
+            android:background="@color/colorDiscount"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            tools:text="\u20b9 200"
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/itemListItemFinalPriceTextView"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            tools:text="\u20b9 100"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

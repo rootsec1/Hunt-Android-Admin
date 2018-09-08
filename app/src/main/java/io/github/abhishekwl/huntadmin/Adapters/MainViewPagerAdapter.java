@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import io.github.abhishekwl.huntadmin.Fragments.AnalyticsFragment;
 import io.github.abhishekwl.huntadmin.Fragments.HistoryFragment;
+import io.github.abhishekwl.huntadmin.Fragments.InventoryFragment;
 import io.github.abhishekwl.huntadmin.Fragments.OrdersFragment;
 import io.github.abhishekwl.huntadmin.Fragments.ProfileFragment;
 
@@ -18,14 +19,15 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0: return new OrdersFragment();
-            case 1: return new HistoryFragment();
-            case 2: return new AnalyticsFragment();
+            case 1: return new InventoryFragment();
+            case 2: return new HistoryFragment();
+            case 3: return new AnalyticsFragment();
             default: return new ProfileFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 }
