@@ -2,7 +2,7 @@
 <!DOCTYPE resources
     [
         <!ENTITY author "abhishekwl">
-        <!ENTITY base_url "http://192.168.2.7:8000/api/v1/">
+        <!ENTITY base_url "https://shielded-waters-36569.herokuapp.com/api/v1/">
     ]>
 
 <resources>

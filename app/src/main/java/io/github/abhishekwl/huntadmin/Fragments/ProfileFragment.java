@@ -105,6 +105,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void fetchStore(String uid) {
+        materialDialog = new MaterialDialog.Builder(rootView.getContext())
+                .title(R.string.app_name)
+                .content("Fetching store details")
+                .progress(true, 0)
+                .contentColor(colorBlack)
+                .show();
+
         apiInterface.getStore(uid).enqueue(new Callback<Store>() {
             @Override
             public void onResponse(@NonNull Call<Store> call, @NonNull Response<Store> response) {
@@ -122,6 +129,7 @@ public class ProfileFragment extends Fragment {
         currentStore = store;
         ((MainActivity) Objects.requireNonNull(getActivity())).setCurrentStore(currentStore);
         Glide.with(rootView.getContext()).load(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getPhotoUrl()).into(profileFragmentImageView);
+        if (materialDialog.isShowing()) materialDialog.dismiss();
         profileFragmentStoreNameEditText.setText(store.getName());
         profileFragmentStoreContactNumberEditText.setText(store.getPhone());
         profileFragmentDeliveryYesRadioButton.setChecked(store.isDeliveryService());

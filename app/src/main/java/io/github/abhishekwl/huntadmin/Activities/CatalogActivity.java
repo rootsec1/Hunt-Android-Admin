@@ -178,14 +178,16 @@ public class CatalogActivity extends AppCompatActivity {
                 apiInterface.getItems(firebaseAuth.getUid(), query).enqueue(new Callback<ArrayList<Item>>() {
                     @Override
                     public void onResponse(@NonNull Call<ArrayList<Item>> call, @NonNull Response<ArrayList<Item>> response) {
-                        itemArrayList.clear();
-                        itemArrayList.addAll(response.body());
-                        catalogSwipeRefreshLayout.setRefreshing(false);
-                        recyclerGridViewAdapter.notifyDataSetChanged();
+                        if (response.body()!=null) {
+                            itemArrayList.clear();
+                            itemArrayList.addAll(response.body());
+                            catalogSwipeRefreshLayout.setRefreshing(false);
+                            recyclerGridViewAdapter.notifyDataSetChanged();
 
-                        if (itemArrayList.isEmpty()) {
-                            lottieAnimationView.setVisibility(View.VISIBLE);
-                            Snackbar.make(catalogRecyclerView, query.concat(" is currently unavailable"), Snackbar.LENGTH_LONG).show();
+                            if (itemArrayList.isEmpty()) {
+                                lottieAnimationView.setVisibility(View.VISIBLE);
+                                Snackbar.make(catalogRecyclerView, query.concat(" is currently unavailable"), Snackbar.LENGTH_LONG).show();
+                            }
                         }
                     }
 
