@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -66,18 +66,19 @@ public class ProfileFragment extends Fragment {
     FluidSlider profileFragmentExtraDistanceUnitCostSlider;
     @BindView(R.id.profileFragmentFreeDeliveryCostThresholdSlider)
     FluidSlider profileFragmentFreeDeliveryCostThresholdSlider;
-    @BindView(R.id.profileFragmentUpdateSettingsButton)
-    Button profileFragmentUpdateSettingsButton;
+    @BindView(R.id.profileFragmentUpdateSettingsCardView)
+    CardView profileFragmentUpdateSettingsCardView;
     @BindColor(android.R.color.black) int colorBlack;
 
     private View rootView;
     private ApiInterface apiInterface;
     private Unbinder unbinder;
-    private Store store;
     private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
     private MaterialDialog materialDialog;
+    private Store currentStore;
     private static final int RC_PICK_IMAGE = 910;
+    private ArrayAdapter<String> spinnerAdapter;
 
     public ProfileFragment() {
     }
@@ -100,24 +101,40 @@ public class ProfileFragment extends Fragment {
 
     private void initializeViews() {
         setupDepartmentsDropDown();
-        store = ((MainActivity) Objects.requireNonNull(getActivity())).getCurrentStore();
-        renderStore(store);
+        fetchStore(firebaseAuth.getUid());
+    }
+
+    private void fetchStore(String uid) {
+        apiInterface.getStore(uid).enqueue(new Callback<Store>() {
+            @Override
+            public void onResponse(@NonNull Call<Store> call, @NonNull Response<Store> response) {
+                renderStore(Objects.requireNonNull(response.body()));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Store> call, @NonNull Throwable t) {
+                notifyMessage(t.getMessage());
+            }
+        });
     }
 
     private void renderStore(Store store) {
+        currentStore = store;
+        ((MainActivity) Objects.requireNonNull(getActivity())).setCurrentStore(currentStore);
         Glide.with(rootView.getContext()).load(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getPhotoUrl()).into(profileFragmentImageView);
         profileFragmentStoreNameEditText.setText(store.getName());
         profileFragmentStoreContactNumberEditText.setText(store.getPhone());
         profileFragmentDeliveryYesRadioButton.setChecked(store.isDeliveryService());
         profileFragmentDeliveryNoRadioButton.setChecked(!store.isDeliveryService());
-        profileFragmentDeliveryDistanceThresholdSlider.setPosition((float) store.getDeliveryDistanceThreshold());
-        profileFragmentExtraDistanceUnitCostSlider.setPosition((float) store.getExtraDistanceUnitCost());
-        profileFragmentFreeDeliveryCostThresholdSlider.setPosition((float) store.getFreeDeliveryCostThreshold()/10);
+        profileFragmentStoreDepartmentSpinner.setSelection(spinnerAdapter.getPosition(store.getDepartment()));
+        profileFragmentDeliveryDistanceThresholdSlider.setPosition((float) store.getDeliveryDistanceThreshold()/100);
+        profileFragmentExtraDistanceUnitCostSlider.setPosition((float) store.getExtraDistanceUnitCost()/100);
+        profileFragmentFreeDeliveryCostThresholdSlider.setPosition((float) store.getFreeDeliveryCostThreshold()/100);
     }
 
     private void setupDepartmentsDropDown() {
         String[] departments = rootView.getContext().getResources().getStringArray(R.array.departments);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_spinner_item, departments);
+        spinnerAdapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_spinner_item, departments);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         profileFragmentStoreDepartmentSpinner.setAdapter(spinnerAdapter);
     }
@@ -172,6 +189,44 @@ public class ProfileFragment extends Fragment {
                 Snackbar.make(profileFragmentImageView, Objects.requireNonNull(task.getException()).getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void notifyMessage(String message) {
+        if (materialDialog.isShowing()) materialDialog.dismiss();
+        if (!profileFragmentUpdateSettingsCardView.isEnabled()) profileFragmentUpdateSettingsCardView.setEnabled(true);
+        Snackbar.make(profileFragmentUpdateSettingsCardView, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.profileFragmentUpdateSettingsCardView)
+    public void onSettingsUpdateButton() {
+        String storeName = profileFragmentStoreNameEditText.getText().toString();
+        String storeContactNumber = profileFragmentStoreContactNumberEditText.getText().toString();
+        String storeDepartment = profileFragmentStoreDepartmentSpinner.getSelectedItem().toString();
+        boolean deliveryServiceOffered = profileFragmentDeliveryYesRadioButton.isChecked();
+        double freeDeliveryDistanceThreshold = profileFragmentDeliveryDistanceThresholdSlider.getPosition()*100;
+        double deliveryExtraDistanceUnitCost = profileFragmentExtraDistanceUnitCostSlider.getPosition()*100;
+        double freeDeliveryCostThreshold = profileFragmentFreeDeliveryCostThresholdSlider.getPosition()*100;
+
+        materialDialog = new MaterialDialog.Builder(rootView.getContext())
+                .title(R.string.app_name)
+                .content("Updating store details")
+                .progress(true, 0)
+                .contentColor(colorBlack)
+                .show();
+
+        apiInterface.updateStore(currentStore.getId(), storeName, storeContactNumber, storeDepartment, deliveryServiceOffered, freeDeliveryDistanceThreshold, deliveryExtraDistanceUnitCost, freeDeliveryCostThreshold)
+                .enqueue(new Callback<Store>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Store> call, @NonNull Response<Store> response) {
+                        renderStore(Objects.requireNonNull(response.body()));
+                        notifyMessage("Updated store details.");
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Store> call, @NonNull Throwable t) {
+                        notifyMessage(t.getMessage());
+                    }
+                });
     }
 
     @Override

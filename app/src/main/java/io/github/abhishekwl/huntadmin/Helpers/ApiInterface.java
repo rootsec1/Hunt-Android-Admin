@@ -30,6 +30,18 @@ public interface ApiInterface {
             @Field("longitude") double longitude,
             @Field("delivery_service") boolean deliveryService
     );
+    @FormUrlEncoded
+    @PUT("stores/{id}")
+    Call<Store> updateStore(
+            @Path("id") String storeId,
+            @Field("name") String name,
+            @Field("phone") String contactNumber,
+            @Field("department") String department,
+            @Field("delivery_service") boolean deliveryService,
+            @Field("delivery_distance_threshold") double deliveryDistanceThreshold,
+            @Field("extra_distance_unit_cost") double extraDistanceUnitCost,
+            @Field("free_delivery_cost_threshold") double freeDeliveryCostThreshold
+    );
 
 
     //Items

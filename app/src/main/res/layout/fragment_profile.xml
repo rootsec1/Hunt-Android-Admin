@@ -198,7 +198,7 @@
                         android:id="@+id/profileFragmentFreeDeliveryCostThresholdSlider"
                         app:bar_color="@color/colorPrimaryDark"
                         app:start_text="\u20b9 1"
-                        app:end_text="\u20b9 1000"
+                        app:end_text="\u20b9 100"
                         app:text_size="16sp"
                         app:size="small"
                         app:initial_position="0.15"
@@ -209,17 +209,26 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <Button
-            android:id="@+id/profileFragmentUpdateSettingsButton"
-            android:text="Update Settings"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@color/colorAccent"
+        <android.support.v7.widget.CardView
+            android:id="@+id/profileFragmentUpdateSettingsCardView"
+            app:cardBackgroundColor="@color/colorAccent"
             android:layout_margin="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:contentPadding="14dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Update Settings"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
 </ScrollView>

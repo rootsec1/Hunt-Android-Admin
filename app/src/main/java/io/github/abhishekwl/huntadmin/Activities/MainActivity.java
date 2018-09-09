@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setCurrentStore(Store currentStore) {
         this.currentStore = currentStore;
+        Objects.requireNonNull(getSupportActionBar()).setTitle(currentStore.getName());
     }
 
     @Override

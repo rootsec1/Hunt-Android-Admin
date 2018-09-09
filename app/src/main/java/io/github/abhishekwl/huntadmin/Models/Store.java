@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class Store implements Parcelable {
 
     @SerializedName("uid") private String uid;
+    @SerializedName("_id") private String id;
     @SerializedName("name") private String name;
     @SerializedName("department") private String department;
     @SerializedName("email") private String email;
@@ -238,5 +239,13 @@ public class Store implements Parcelable {
 
     public void setFreeDeliveryCostThreshold(double freeDeliveryCostThreshold) {
         this.freeDeliveryCostThreshold = freeDeliveryCostThreshold;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
