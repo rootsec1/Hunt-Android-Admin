@@ -88,8 +88,9 @@ public class ProfileFragment extends Fragment {
         profileFragmentStoreContactNumberEditText.setText(store.getPhone());
         profileFragmentDeliveryYesRadioButton.setChecked(store.isDeliveryService());
         profileFragmentDeliveryNoRadioButton.setChecked(!store.isDeliveryService());
-        profileFragmentFreeDeliveryCostThresholdSlider.setPosition((float) store.getFreeDeliveryCostThreshold());
-        profileFragmentFreeDeliveryCostThresholdSlider.setBubbleText(Double.toString(store.getFreeDeliveryCostThreshold()));
+        profileFragmentDeliveryDistanceThresholdSlider.setPosition((float) store.getDeliveryDistanceThreshold());
+        profileFragmentExtraDistanceUnitCostSlider.setPosition((float) store.getExtraDistanceUnitCost());
+        profileFragmentFreeDeliveryCostThresholdSlider.setPosition((float) store.getFreeDeliveryCostThreshold()/10);
     }
 
     private void setupDepartmentsDropDown() {

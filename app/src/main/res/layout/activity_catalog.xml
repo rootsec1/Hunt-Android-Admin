@@ -10,29 +10,12 @@
         android:id="@+id/catalogSwipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <GridView
-            android:id="@+id/catalogGridView"
-            android:numColumns="2"
-            android:gravity="center"
-            android:stretchMode="columnWidth"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/catalogRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </GridView>
+        </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/catalogFAB"
-        android:src="@drawable/ic_navigate_next_white_24dp"
-        app:fabSize="normal"
-        android:clickable="true"
-        android:focusable="true"
-        app:rippleColor="@color/colorPrimary"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
-        app:elevation="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/catalogLottieAnimationView"
