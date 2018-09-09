@@ -28,8 +28,7 @@ public interface ApiInterface {
             @Field("phone") String phone,
             @Field("latitude") double latitude,
             @Field("longitude") double longitude,
-            @Field("delivery_service") boolean deliveryService,
-            @Field("image") String image
+            @Field("delivery_service") boolean deliveryService
     );
 
 

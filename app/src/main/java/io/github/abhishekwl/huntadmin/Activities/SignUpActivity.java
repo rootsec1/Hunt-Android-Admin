@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -20,9 +21,14 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
+import java.util.UUID;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,14 +64,17 @@ public class SignUpActivity extends AppCompatActivity {
     RadioButton signUpDeliveryNoRadioButton;
     @BindView(R.id.signUpButton)
     Button signUpButton;
+    @BindColor(android.R.color.black) int colorBlack;
 
     private Location deviceLocation;
     private ApiInterface apiInterface;
     private Unbinder unbinder;
-    private String profilePictureUrl;
     private MaterialDialog materialDialog;
     private FirebaseAuth firebaseAuth;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int RC_PICK_IMAGE = 910;
+    private StorageReference storageReference;
+    private Uri profilePictureUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         retrieveDeviceLocation();
         apiInterface = ApiClient.getClient(getApplicationContext()).create(ApiInterface.class);
+        String randomInt = UUID.randomUUID().toString();
+        storageReference = FirebaseStorage.getInstance().getReference("temp_stores").child(randomInt).child("profile_picture.jpg");
     }
 
     @SuppressLint("MissingPermission")
@@ -136,22 +147,30 @@ public class SignUpActivity extends AppCompatActivity {
 
         firebaseAuth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                apiInterface.createStore(firebaseAuth.getUid(), storeName, department, emailAddress, contactNumber, deviceLocation.getLatitude(), deviceLocation.getLongitude(), deliveryOffered, profilePictureUrl)
-                        .enqueue(new Callback<Store>() {
-                            @Override
-                            public void onResponse(@NonNull Call<Store> call, @NonNull Response<Store> response) {
-                                notifyMessage("Account created successfully");
-                                Intent mainActivityIntent = new Intent(SignUpActivity.this, MainActivity.class);
-                                mainActivityIntent.putExtra("STORE", response.body());
-                                startActivity(mainActivityIntent);
-                                finish();
-                            }
+                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(firebaseAuth.getUid())
+                        .setPhotoUri(profilePictureUri)
+                        .build();
+                Objects.requireNonNull(firebaseAuth.getCurrentUser()).updateProfile(userProfileChangeRequest).addOnCompleteListener(task2 -> {
+                    if (task.isSuccessful() && materialDialog.isShowing()) {
+                        apiInterface.createStore(firebaseAuth.getUid(), storeName, department, emailAddress, contactNumber, deviceLocation.getLatitude(), deviceLocation.getLongitude(), deliveryOffered)
+                                .enqueue(new Callback<Store>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<Store> call, @NonNull Response<Store> response) {
+                                        notifyMessage("Account created successfully");
+                                        Intent mainActivityIntent = new Intent(SignUpActivity.this, MainActivity.class);
+                                        mainActivityIntent.putExtra("STORE", response.body());
+                                        startActivity(mainActivityIntent);
+                                        finish();
+                                    }
 
-                            @Override
-                            public void onFailure(@NonNull Call<Store> call, @NonNull Throwable t) {
-                                Objects.requireNonNull(firebaseAuth.getCurrentUser()).delete().addOnSuccessListener(aVoid -> notifyMessage(t.getMessage()));
-                            }
-                        });
+                                    @Override
+                                    public void onFailure(@NonNull Call<Store> call, @NonNull Throwable t) {
+                                        Objects.requireNonNull(firebaseAuth.getCurrentUser()).delete().addOnSuccessListener(aVoid -> notifyMessage(t.getMessage()));
+                                    }
+                                });
+                    } else notifyMessage(Objects.requireNonNull(task.getException()).getMessage());
+                });
             } else notifyMessage(Objects.requireNonNull(task.getException()).getMessage());
         });
     }
@@ -160,6 +179,37 @@ public class SignUpActivity extends AppCompatActivity {
         if (materialDialog.isShowing()) materialDialog.dismiss();
         if (!signUpButton.isEnabled()) signUpButton.setEnabled(true);
         Snackbar.make(signUpButton, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.signUpProfilePictureImageView)
+    public void onProfilePicturePress() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a photo for your store"), RC_PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==RC_PICK_IMAGE && resultCode==RESULT_OK && data!=null && data.getData()!=null) {
+            Uri selectedFileUri = data.getData();
+            materialDialog = new MaterialDialog.Builder(SignUpActivity.this)
+                    .title(R.string.app_name)
+                    .content("Updating store photo")
+                    .contentColor(colorBlack)
+                    .progress(true, 0)
+                    .show();
+            storageReference.putFile(selectedFileUri)
+                    .addOnFailureListener(e -> notifyMessage(e.getMessage()))
+                    .addOnSuccessListener(taskSnapshot -> {
+                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            profilePictureUri = uri;
+                            Glide.with(getApplicationContext()).load(profilePictureUri).into(signUpProfilePictureImageView);
+                            notifyMessage("Profile picture updated.");
+                        }).addOnFailureListener(e -> notifyMessage(e.getMessage()));
+                    });
+        }
     }
 
     @Override
