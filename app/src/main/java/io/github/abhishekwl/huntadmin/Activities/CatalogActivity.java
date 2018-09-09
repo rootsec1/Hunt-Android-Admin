@@ -1,5 +1,6 @@
 package io.github.abhishekwl.huntadmin.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +13,16 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SearchView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ramotion.fluidslider.FluidSlider;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -48,6 +53,7 @@ public class CatalogActivity extends AppCompatActivity {
     private ArrayList<Item> masterItemArrayList = new ArrayList<>();
     private ApiInterface apiInterface;
     private FirebaseAuth firebaseAuth;
+    private MaterialDialog materialDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,7 @@ public class CatalogActivity extends AppCompatActivity {
 
     private void initializeComponents() {
         currentStore = getIntent().getParcelableExtra("STORE");
-        itemsGridViewAdapter = new ItemsGridViewAdapter(getApplicationContext(), itemArrayList);
+        itemsGridViewAdapter = new ItemsGridViewAdapter(getApplicationContext(), itemArrayList, CatalogActivity.this);
         masterItemArrayList.clear();
         masterItemArrayList.addAll(itemArrayList);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -70,11 +76,45 @@ public class CatalogActivity extends AppCompatActivity {
 
     private void initializeViews() {
         itemsGridView.setAdapter(itemsGridViewAdapter);
-        itemsGridView.setOnItemClickListener((parent, view, position, id) -> {
-            Item selectedItem = itemArrayList.get(position);
-        });
         catalogSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorAccentSecondary);
+        catalogSwipeRefreshLayout.setOnRefreshListener(this::performNetworkRequest);
+        itemsGridView.setOnItemClickListener((parent, view, position, id) -> editItem(itemArrayList.get(position)));
         performNetworkRequest();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void editItem(Item item) {
+        materialDialog = new MaterialDialog.Builder(CatalogActivity.this)
+                .title(item.getName())
+                .customView(R.layout.item_price_discount_dialog, true)
+                .positiveText("UPDATE")
+                .negativeText("CANCEL")
+                .positiveColorRes(R.color.colorAccent)
+                .negativeColorRes(R.color.colorTextDark)
+                .showListener(dialog -> {
+                    EditText itemOriginalPriceEditText = (EditText) ((MaterialDialog) dialog).findViewById(R.id.itemDialogItemPriceEditText);
+                    FluidSlider itemDiscountSlider = (FluidSlider) ((MaterialDialog) dialog).findViewById(R.id.itemDialogDiscountSlider);
+
+                    itemOriginalPriceEditText.setText(Double.toString(item.getPrice()));
+                    itemDiscountSlider.setPosition((float) item.getDiscount()/100);
+                })
+                .onPositive((dialog, which) -> {
+                    EditText itemOriginalPriceEditText = (EditText) dialog.findViewById(R.id.itemDialogItemPriceEditText);
+                    FluidSlider itemDiscountSlider = (FluidSlider) dialog.findViewById(R.id.itemDialogDiscountSlider);
+
+                    double newItemPrice = Double.parseDouble(itemOriginalPriceEditText.getText().toString());
+                    double newItemDiscount = roundTwoDecimals(itemDiscountSlider.getPosition())*100;
+
+                    updateItemDetails(item, newItemPrice, newItemDiscount);
+                })
+                .onNegative((dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    double roundTwoDecimals(double d)
+    {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
     }
 
     private void performNetworkRequest() {
@@ -85,11 +125,11 @@ public class CatalogActivity extends AppCompatActivity {
         apiInterface.getItems(firebaseAuth.getUid(), 1).enqueue(new Callback<ArrayList<Item>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Item>> call, @NonNull Response<ArrayList<Item>> response) {
-                itemArrayList.clear();
-                itemArrayList.addAll(response.body());
+                itemArrayList = new ArrayList<>(Objects.requireNonNull(response.body()));
                 catalogSwipeRefreshLayout.setRefreshing(false);
                 lottieAnimationView.setVisibility(View.GONE);
-                itemsGridViewAdapter.notifyDataSetChanged();
+                itemsGridViewAdapter = new ItemsGridViewAdapter(getApplicationContext(), itemArrayList, CatalogActivity.this);
+                itemsGridView.setAdapter(itemsGridViewAdapter);
             }
 
             @Override
@@ -120,7 +160,7 @@ public class CatalogActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<ArrayList<Item>> call, @NonNull Response<ArrayList<Item>> response) {
                         itemArrayList.clear();
                         itemArrayList.addAll(response.body());
-                        itemsGridViewAdapter = new ItemsGridViewAdapter(getApplicationContext(), itemArrayList);
+                        itemsGridViewAdapter = new ItemsGridViewAdapter(getApplicationContext(), itemArrayList, CatalogActivity.this);
                         catalogSwipeRefreshLayout.setRefreshing(false);
                         itemsGridView.setAdapter(itemsGridViewAdapter);
 
@@ -148,6 +188,22 @@ public class CatalogActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    private void updateItemDetails(Item item, double newItemPrice, double newItemDiscount) {
+        apiInterface.updateItem(item.getId(), newItemPrice, newItemDiscount).enqueue(new Callback<Item>() {
+            @Override
+            public void onResponse(@NonNull Call<Item> call, @NonNull Response<Item> response) {
+                Snackbar.make(itemsGridView, "Item updated. Refreshing", Snackbar.LENGTH_SHORT).show();
+                performNetworkRequest();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Item> call, @NonNull Throwable t) {
+                Snackbar.make(itemsGridView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

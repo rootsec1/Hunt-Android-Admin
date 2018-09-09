@@ -6,15 +6,17 @@
     app:cardBackgroundColor="@android:color/white"
     app:cardUseCompatPadding="true"
     app:contentPadding="16dp"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="vertical"
-        android:clickable="true"
-        android:focusable="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:layout_marginEnd="16dp"
         android:id="@+id/itemListItemRootLinearLayout"
         android:layout_width="match_parent"

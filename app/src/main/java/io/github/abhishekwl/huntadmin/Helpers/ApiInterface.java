@@ -9,6 +9,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -34,7 +36,9 @@ public interface ApiInterface {
     //Items
     @GET("items")
     Call<ArrayList<Item>> getItems(@Query("uid") String uid, @Query("all") int all);
-
     @GET("items")
     Call<ArrayList<Item>> getItems(@Query("uid") String uid, @Query("query") String query);
+    @FormUrlEncoded
+    @PUT("items/{id}")
+    Call<Item> updateItem(@Path("id") String id, @Field("price") double price, @Field("discount") double discount);
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -84,11 +85,19 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
                 itemOriginalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(item.getPrice())));
                 itemOriginalPriceTextView.setPaintFlags(itemOriginalPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 double finalPrice = item.getPrice() - (item.getDiscount()/100 * item.getPrice());
+                finalPrice = roundTwoDecimals(finalPrice);
                 itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(finalPrice)));
             }
             itemLinearLayout.setOnClickListener(v -> {
                 //TODO: On item Press
             });
+        }
+
+
+        double roundTwoDecimals(double d)
+        {
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
+            return Double.valueOf(twoDForm.format(d));
         }
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="@string/item_original_price"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/itemDialogItemPriceEditText"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@android:color/black"
+        android:hint="Amount"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="@string/discount_on_item"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.ramotion.fluidslider.FluidSlider
+        android:id="@+id/itemDialogDiscountSlider"
+        app:bar_color="@color/colorAccent"
+        app:size="small"
+        app:initial_position="0.0"
+        app:start_text="0.0"
+        app:end_text="100.0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

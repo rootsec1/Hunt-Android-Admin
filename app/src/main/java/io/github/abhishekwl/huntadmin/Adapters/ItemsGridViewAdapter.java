@@ -1,5 +1,7 @@
 package io.github.abhishekwl.huntadmin.Adapters;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -9,12 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
 
+import io.github.abhishekwl.huntadmin.Helpers.ApiClient;
+import io.github.abhishekwl.huntadmin.Helpers.ApiInterface;
 import io.github.abhishekwl.huntadmin.Models.Item;
 import io.github.abhishekwl.huntadmin.R;
 
@@ -24,12 +30,17 @@ public class ItemsGridViewAdapter extends BaseAdapter {
     private ArrayList<Item> itemArrayList;
     private LayoutInflater layoutInflater;
     private String currencyCode;
+    private MaterialDialog materialDialog;
+    private Activity activity;
+    private ApiInterface apiInterface;
 
-    public ItemsGridViewAdapter(Context context, ArrayList<Item> itemArrayList) {
+    public ItemsGridViewAdapter(Context context, ArrayList<Item> itemArrayList, Activity activity) {
         this.context = context;
         this.itemArrayList = itemArrayList;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.currencyCode = Currency.getInstance(Locale.getDefault()).getCurrencyCode();
+        this.activity = activity;
+        this.apiInterface = ApiClient.getClient(context).create(ApiInterface.class);
     }
 
     @Override
@@ -39,14 +50,15 @@ public class ItemsGridViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return itemArrayList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View gridView;
@@ -72,15 +84,17 @@ public class ItemsGridViewAdapter extends BaseAdapter {
                 itemOriginalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(item.getPrice())));
                 itemOriginalPriceTextView.setPaintFlags(itemOriginalPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 double finalPrice = item.getPrice() - (item.getDiscount()/100 * item.getPrice());
+                finalPrice = roundTwoDecimals(finalPrice);
                 itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(finalPrice)));
             }
         } else gridView = convertView;
         return gridView;
     }
 
-    public ArrayList<Item> filter(String query, ArrayList<Item> masterItemArrayList) {
-        ArrayList<Item> filteredList = new ArrayList<>();
-        for (Item item: masterItemArrayList) if (item.getName().contains(query) || item.getSubcategory().contains(query) || item.getCategory().contains(query)) filteredList.add(item);
-        return filteredList;
+    double roundTwoDecimals(double d)
+    {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
     }
+
 }
