@@ -34,7 +34,7 @@
         <activity
             android:name=".Activities.CatalogActivity"
             android:theme="@style/ActionBarTheme"
-            android:label="Catalog"
+            android:label=""
             android:parentActivityName=".Activities.MainActivity" />
     </application>
 

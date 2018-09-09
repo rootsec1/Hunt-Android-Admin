@@ -21,6 +21,7 @@
     <string name="analytics">Analytics</string>
     <string name="order_history">Order History</string>
     <string name="orders">Orders</string>
+    <string name="search">Search</string>
 
     <array name="departments">
         <item>Electronics</item>

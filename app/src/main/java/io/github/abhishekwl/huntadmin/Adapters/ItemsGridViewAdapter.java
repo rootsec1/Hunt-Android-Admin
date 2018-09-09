@@ -77,4 +77,10 @@ public class ItemsGridViewAdapter extends BaseAdapter {
         } else gridView = convertView;
         return gridView;
     }
+
+    public ArrayList<Item> filter(String query, ArrayList<Item> masterItemArrayList) {
+        ArrayList<Item> filteredList = new ArrayList<>();
+        for (Item item: masterItemArrayList) if (item.getName().contains(query) || item.getSubcategory().contains(query) || item.getCategory().contains(query)) filteredList.add(item);
+        return filteredList;
+    }
 }

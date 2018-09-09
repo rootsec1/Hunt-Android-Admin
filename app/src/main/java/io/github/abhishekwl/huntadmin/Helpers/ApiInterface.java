@@ -34,4 +34,7 @@ public interface ApiInterface {
     //Items
     @GET("items")
     Call<ArrayList<Item>> getItems(@Query("uid") String uid, @Query("all") int all);
+
+    @GET("items")
+    Call<ArrayList<Item>> getItems(@Query("uid") String uid, @Query("query") String query);
 }

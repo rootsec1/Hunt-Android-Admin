@@ -57,5 +57,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //Slider
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.0'
+    //Lottie
+    implementation 'com.airbnb.android:lottie:2.6.1'
 }
 apply plugin: 'com.google.gms.google-services'
