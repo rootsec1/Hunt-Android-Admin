@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     app:contentPadding="16dp"
+    app:contentPaddingRight="0dp"
     app:cardBackgroundColor="@android:color/white"
     app:cardUseCompatPadding="true"
     android:layout_width="match_parent"

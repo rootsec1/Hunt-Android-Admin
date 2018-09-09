@@ -8,9 +8,8 @@
 
     <GridView
         android:id="@+id/catalogGridView"
-        android:numColumns="auto_fit"
+        android:numColumns="2"
         android:gravity="center"
-        android:columnWidth="128dp"
         android:stretchMode="columnWidth"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

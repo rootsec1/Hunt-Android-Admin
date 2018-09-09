@@ -1,13 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardBackgroundColor="@android:color/white"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="2dp"
-    app:contentPadding="4dp"
-    android:layout_width="wrap_content"
+    app:contentPadding="16dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <include layout="@layout/item_list_item" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/itemListItemRootLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="276dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/itemListItemImageView"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/price_tag_black"
+            app:civ_border_width="1dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp" />
+
+        <TextView
+            android:id="@+id/itemListItemSubcategoryTextView"
+            tools:text="Item Subcategory"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/itemListItemNameTextView"
+            tools:text="Item Name"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/itemListItemOriginalPriceTextView"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            tools:text="\u20b9 200"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.CardView
+            app:cardBackgroundColor="@color/colorAccent"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="16dp"
+            app:contentPadding="8dp"
+            app:cardElevation="8dp"
+            app:contentPaddingLeft="16dp"
+            app:contentPaddingRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/itemListItemFinalPriceTextView"
+                android:textColor="@android:color/white"
+                tools:text="\u20b9 100"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

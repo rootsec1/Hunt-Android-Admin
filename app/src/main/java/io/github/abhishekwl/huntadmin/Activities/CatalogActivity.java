@@ -58,6 +58,9 @@ public class CatalogActivity extends AppCompatActivity {
 
     private void initializeViews() {
         itemsGridView.setAdapter(itemsGridViewAdapter);
+        itemsGridView.setOnItemClickListener((parent, view, position, id) -> {
+            Item selectedItem = itemArrayList.get(position);
+        });
         performNetworkRequest();
     }
 

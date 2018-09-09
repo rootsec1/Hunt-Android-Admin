@@ -36,8 +36,10 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     @Override
     public void onBindViewHolder(@NonNull CategoryRecyclerViewAdapter.CategoryViewHolder holder, int position) {
-        Category category = categoryArrayList.get(position);
-        holder.render(holder.itemView.getContext(), category);
+        if (categoryArrayList.size()>0) {
+            Category category = categoryArrayList.get(position);
+            holder.render(holder.itemView.getContext(), category);
+        }
     }
 
     @Override

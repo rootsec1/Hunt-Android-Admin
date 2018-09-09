@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -59,7 +58,6 @@ public class ItemsGridViewAdapter extends BaseAdapter {
             TextView itemSubcategoryTextView = gridView.findViewById(R.id.itemListItemSubcategoryTextView);
             TextView itemOriginalPriceTextView = gridView.findViewById(R.id.itemListItemOriginalPriceTextView);
             TextView itemFinalPriceTextView = gridView.findViewById(R.id.itemListItemFinalPriceTextView);
-            LinearLayout itemLinearLayout = gridView.findViewById(R.id.itemListItemRootLinearLayout);
 
             Item item = itemArrayList.get(position);
 
@@ -76,10 +74,6 @@ public class ItemsGridViewAdapter extends BaseAdapter {
                 double finalPrice = item.getPrice() - (item.getDiscount()/100 * item.getPrice());
                 itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(finalPrice)));
             }
-            itemLinearLayout.setOnClickListener(v -> {
-                //TODO: On item Press
-            });
-
         } else gridView = convertView;
         return gridView;
     }

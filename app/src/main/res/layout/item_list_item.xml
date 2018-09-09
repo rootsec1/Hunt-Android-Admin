@@ -8,14 +8,15 @@
     android:focusable="true"
     android:layout_marginEnd="16dp"
     android:id="@+id/itemListItemRootLinearLayout"
-    android:layout_width="128dp"
-    android:layout_height="216dp">
+    android:layout_width="156dp"
+    android:layout_height="240dp"
+    tools:ignore="RtlSymmetry">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/itemListItemImageView"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        app:civ_border_color="@color/colorAccent"
+        tools:src="@drawable/price_tag_black"
         app:civ_border_width="1dp"
         android:layout_width="80dp"
         android:layout_height="80dp" />
@@ -23,9 +24,9 @@
     <TextView
         android:id="@+id/itemListItemSubcategoryTextView"
         tools:text="Item Name"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
         tools:text="Item Name"
         android:layout_marginTop="4dp"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"
         android:fontFamily="sans-serif-light"
@@ -45,23 +46,33 @@
 
     <TextView
         android:id="@+id/itemListItemOriginalPriceTextView"
-        android:background="@color/colorDiscount"
         android:textColor="@android:color/black"
         android:textSize="14sp"
+        android:textStyle="bold"
         android:layout_marginTop="4dp"
         tools:text="\u20b9 200"
-        android:padding="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/itemListItemFinalPriceTextView"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        tools:text="\u20b9 100"
-        android:textSize="16sp"
-        android:layout_marginTop="4dp"
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="@color/colorAccent"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="16dp"
+        app:contentPadding="8dp"
+        app:cardElevation="8dp"
+        app:contentPaddingLeft="16dp"
+        app:contentPaddingRight="16dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/itemListItemFinalPriceTextView"
+            android:textColor="@android:color/white"
+            tools:text="\u20b9 100"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
