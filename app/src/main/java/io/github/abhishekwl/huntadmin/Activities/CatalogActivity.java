@@ -25,6 +25,7 @@ import com.ramotion.fluidslider.FluidSlider;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -135,6 +136,7 @@ public class CatalogActivity extends AppCompatActivity {
                 lottieAnimationView.setVisibility(View.GONE);
                 itemArrayList.clear();
                 itemArrayList.addAll(response.body());
+                itemArrayList = sortItemArrayList(itemArrayList);
                 catalogRecyclerView.setAdapter(recyclerGridViewAdapter);
             }
 
@@ -181,6 +183,7 @@ public class CatalogActivity extends AppCompatActivity {
                         if (response.body()!=null) {
                             itemArrayList.clear();
                             itemArrayList.addAll(response.body());
+                            itemArrayList = sortItemArrayList(itemArrayList);
                             catalogSwipeRefreshLayout.setRefreshing(false);
                             recyclerGridViewAdapter.notifyDataSetChanged();
 
@@ -209,6 +212,11 @@ public class CatalogActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private ArrayList<Item> sortItemArrayList(ArrayList<Item> itemArrayList) {
+        Collections.sort(itemArrayList, (o1, o2) -> (int) (o2.getPriority()-o1.getPriority()));
+        return itemArrayList;
     }
 
 

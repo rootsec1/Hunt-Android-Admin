@@ -64,26 +64,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.CardView
-            app:cardBackgroundColor="@color/colorAccent"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:contentPadding="8dp"
-            app:cardElevation="8dp"
-            app:contentPaddingLeft="16dp"
-            app:contentPaddingRight="16dp"
-            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <android.support.v7.widget.CardView
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardCornerRadius="16dp"
+                app:contentPadding="8dp"
+                app:cardElevation="8dp"
+                app:contentPaddingLeft="16dp"
+                app:contentPaddingRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/itemListItemFinalPriceTextView"
+                    android:textColor="@android:color/white"
+                    tools:text="\u20b9 100"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
+
             <TextView
-                android:id="@+id/itemListItemFinalPriceTextView"
-                android:textColor="@android:color/white"
-                tools:text="\u20b9 100"
-                android:textSize="16sp"
+                android:id="@+id/itemListItemAdTextView"
+                android:text="@string/ad"
+                android:textColor="@color/colorAccentSecondary"
+                android:textSize="14sp"
+                android:background="@drawable/accent_secondary_border"
+                android:layout_marginStart="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 

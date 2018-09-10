@@ -8,7 +8,7 @@
     android:focusable="true"
     android:layout_marginEnd="16dp"
     android:id="@+id/itemListItemRootLinearLayout"
-    android:layout_width="156dp"
+    android:layout_width="164dp"
     android:layout_height="240dp"
     tools:ignore="RtlSymmetry">
 

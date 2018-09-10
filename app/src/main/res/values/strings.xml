@@ -29,6 +29,7 @@
     <string name="search">Search</string>
     <string name="discount_on_item">Discount on item (%)</string>
     <string name="item_original_price">Item Original Price (\u20b9)</string>
+    <string name="ad">Ad</string>
 
     <array name="departments">
         <item>Electronics</item>

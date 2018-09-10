@@ -67,6 +67,8 @@ public class RecyclerGridViewManager extends RecyclerView.Adapter<RecyclerGridVi
         TextView itemOriginalPriceTextView;
         @BindView(R.id.itemListItemFinalPriceTextView)
         TextView itemFinalPriceTextView;
+        @BindView(R.id.itemListItemAdTextView)
+        TextView itemAdTextView;
 
         GridItemViewHolder(View itemView) {
             super(itemView);
@@ -88,6 +90,7 @@ public class RecyclerGridViewManager extends RecyclerView.Adapter<RecyclerGridVi
                 finalPrice = roundTwoDecimals(finalPrice);
                 itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(finalPrice)));
             }
+            if (item.getPriority()==0) itemAdTextView.setVisibility(View.GONE);
         }
 
         double roundTwoDecimals(double d) {

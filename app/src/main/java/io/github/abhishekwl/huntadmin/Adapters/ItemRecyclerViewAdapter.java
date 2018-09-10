@@ -88,9 +88,6 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
                 finalPrice = roundTwoDecimals(finalPrice);
                 itemFinalPriceTextView.setText(currencyCode.concat(" ").concat(Double.toString(finalPrice)));
             }
-            itemLinearLayout.setOnClickListener(v -> {
-                //TODO: On item Press
-            });
         }
 
 
